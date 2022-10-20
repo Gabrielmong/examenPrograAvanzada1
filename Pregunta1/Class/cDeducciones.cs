@@ -28,10 +28,14 @@ namespace Pregunta1.Class {
         }
 
         public deduccione deleteDeduccion(int id_empleado) {
-            deduccione de = db.deducciones.Single(x => x.id_empleado == id_empleado);
-            db.deducciones.Remove(de);
-            db.SaveChanges();
-            return de;
+            try {
+                deduccione de = db.deducciones.Single(x => x.id_empleado == id_empleado);
+                db.deducciones.Remove(de);
+                db.SaveChanges();
+                return de;
+            } catch (Exception) {
+                return null;
+            }
         }
     }
 }
