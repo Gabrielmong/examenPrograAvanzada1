@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CASO1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="deducciones">
+          <Key>
+            <PropertyRef Name="codigo_deduccion" />
+          </Key>
+          <Property Name="codigo_deduccion" Type="int" Nullable="false" />
+          <Property Name="id_empleado" Type="int" Nullable="false" />
+          <Property Name="cooperativa" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="prestamo" Type="decimal" Precision="12" Scale="2" />
+          <Property Name="ahorro" Type="decimal" Precision="12" Scale="2" />
+        </EntityType>
+        <EntityType Name="empleado">
+          <Key>
+            <PropertyRef Name="codigo_empleado" />
+          </Key>
+          <Property Name="codigo_empleado" Type="int" Nullable="false" />
+          <Property Name="Nombre" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Horas_laboradas" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Salario_Hora" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Salario_Bruto" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__deduccion__id_em__267ABA7A">
+          <End Role="empleado" Type="Self.empleado" Multiplicity="1" />
+          <End Role="deducciones" Type="Self.deducciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleado">
+              <PropertyRef Name="codigo_empleado" />
+            </Principal>
+            <Dependent Role="deducciones">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CASO1ModelStoreContainer">
+          <EntitySet Name="deducciones" EntityType="Self.deducciones" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="empleado" EntityType="Self.empleado" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__deduccion__id_em__267ABA7A" Association="Self.FK__deduccion__id_em__267ABA7A">
+            <End Role="empleado" EntitySet="empleado" />
+            <End Role="deducciones" EntitySet="deducciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CASO1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="deduccione">
+          <Key>
+            <PropertyRef Name="codigo_deduccion" />
+          </Key>
+          <Property Name="codigo_deduccion" Type="Int32" Nullable="false" />
+          <Property Name="id_empleado" Type="Int32" Nullable="false" />
+          <Property Name="cooperativa" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="prestamo" Type="Decimal" Precision="12" Scale="2" />
+          <Property Name="ahorro" Type="Decimal" Precision="12" Scale="2" />
+          <NavigationProperty Name="empleado" Relationship="Self.FK__deduccion__id_em__267ABA7A" FromRole="deducciones" ToRole="empleado" />
+        </EntityType>
+        <EntityType Name="empleado">
+          <Key>
+            <PropertyRef Name="codigo_empleado" />
+          </Key>
+          <Property Name="codigo_empleado" Type="Int32" Nullable="false" />
+          <Property Name="Nombre" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Horas_laboradas" Type="Decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="Salario_Hora" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="Salario_Bruto" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <NavigationProperty Name="deducciones" Relationship="Self.FK__deduccion__id_em__267ABA7A" FromRole="empleado" ToRole="deducciones" />
+        </EntityType>
+        <Association Name="FK__deduccion__id_em__267ABA7A">
+          <End Role="empleado" Type="Self.empleado" Multiplicity="1" />
+          <End Role="deducciones" Type="Self.deduccione" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="empleado">
+              <PropertyRef Name="codigo_empleado" />
+            </Principal>
+            <Dependent Role="deducciones">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CASO1Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="deducciones" EntityType="Self.deduccione" />
+          <EntitySet Name="empleadoes" EntityType="Self.empleado" />
+          <AssociationSet Name="FK__deduccion__id_em__267ABA7A" Association="Self.FK__deduccion__id_em__267ABA7A">
+            <End Role="empleado" EntitySet="empleadoes" />
+            <End Role="deducciones" EntitySet="deducciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CASO1ModelStoreContainer" CdmEntityContainer="CASO1Entities">
+          <EntitySetMapping Name="deducciones">
+            <EntityTypeMapping TypeName="CASO1Model.deduccione">
+              <MappingFragment StoreEntitySet="deducciones">
+                <ScalarProperty Name="codigo_deduccion" ColumnName="codigo_deduccion" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="cooperativa" ColumnName="cooperativa" />
+                <ScalarProperty Name="prestamo" ColumnName="prestamo" />
+                <ScalarProperty Name="ahorro" ColumnName="ahorro" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="empleadoes">
+            <EntityTypeMapping TypeName="CASO1Model.empleado">
+              <MappingFragment StoreEntitySet="empleado">
+                <ScalarProperty Name="codigo_empleado" ColumnName="codigo_empleado" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Horas_laboradas" ColumnName="Horas_laboradas" />
+                <ScalarProperty Name="Salario_Hora" ColumnName="Salario_Hora" />
+                <ScalarProperty Name="Salario_Bruto" ColumnName="Salario_Bruto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
